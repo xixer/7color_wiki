@@ -1,0 +1,106 @@
+%title Git安装与配置
+ = Git安装与配置 =
+== 下载 ==
+===== GIT下载 =====
+[http://code.google.com/p/msysgit/ 项目地址]
+[http://msysgit.googlecode.com/files/Git-1.7.3.1-preview20101002.exe 源文件(Win)]
+===== TortoiseGit下载 =====
+[http://code.google.com/p/tortoisegit/ 项目地址]
+[http://tortoisegit.googlecode.com/files/TortoiseGit-1.5.8.0-32bit.msi 源文件(Win)]
+
+== 配置 ==
+# 生成keygen
+  {{{
+    ssh-keygen -t rsa -C "voow@qq.com"
+  }}}
+  然后复制~/.ssh/id_rsa.pub的内容至[https://github.com/account#ssh_bucket github公钥],添加新的公钥,标题任意,公钥的内容为id_rsa.pub的内容
+# 为当前版本库添加用户信息
+  {{{
+    git config --global user.name "7color"
+    git config --global user.email voow@qq.com
+  }}}
+# 创建版本库目录
+  {{{
+    mkdir 7color.github.com  
+  }}}
+# 切换至版本库目录
+  {{{
+    cd 7color.github.com
+  }}}
+# 初始化版本库
+  {{{
+    git init
+  }}}
+# 新建文件README
+  {{{
+    touch README 
+  }}}
+# 将文件提交到 git索引(空格分隔文件名, add . 提交所有)
+  {{{
+    git add README  
+  }}}
+# 提交版本库,并添加备注(-m 添加备注,无参数 调用系统编辑器添加备注,-a 省略add,一次性提交索引与提交版本库)
+  {{{
+    git commit -m "first commit"  
+  }}}
+# 创建远程主机的标记7color
+  {{{
+    git remote add 7color(origin) git@github.com:xixer/7color.github.com.git
+  }}}
+# 从7color标记(指定)的remote(远程主机)获取最新的版本到本地，并自动进行merge到本地当前分支上(fetch+merge)
+  {{{
+    git pull 7color master  
+  }}}
+# 提交本地master分支的所有的修改至7color标记(指向)的remote(远程主机)的master分支
+  {{{
+    git push 7color master  
+  }}}
+== 其它命令 ==
+# 查看版本库状态: `git status`
+# 查看版本纪录(`-p` 查看每个版本的改动纪录): `git log`
+# 查看自上次提交以来发生什么改动: `git diff`
+# 为某一版本创建版本标签: `git tag` (版本标签存储在`.git/refs/tags/`目录)
+# 回溯到历史版本(`--soft` 回溯到已提交到索引但未提交到版本库的状态,`--hard` 将文件内容也一同回溯,`--mixed` 默认选项): `git reset`
+  * `git reset` 回溯到git add之前的状态
+  * `git reset --soft`回溯到
+  * `git add`之后的状态
+# 分支:
+  * `git branch` 查看分支(`-a` 查看所有分支)
+  * `git branch 分支名称` 新建分支
+  * `git checkout` 切换到指定分支(`-b` 创建分支并切换分支)
+  * `git branch -D 分支名称` 删除分支(`-D`强行删除分支；`-d`只有分支内容被合并后才能删除)
+  * `git merge` 合并分支
+# 创建一个镜像版本库:
+  * `git clone 原始版本库路径  镜像版本库路径(local)`
+  * `git fetch origin` 更新 `origin` 分支。如果 `origin` 分支不是最新的原始版本库，会产生错误的补丁文件(不会自动`merge`,仅下载 & 更新索引)
+  * `git rebase origin` 将工作迁移到最新原始版本库基础上
+  * `git format-patch origin` 生成补丁文件
+  * `git am` 将这个补丁应用到版本库
+# `git pull` 从协作者那里获取更新, 并自动merge到本地的当前分支上(`fetch+merge`)
+# `echo "test">.gitignore` 增加到忽略列表
+# 查看帮助 `git help gitignore`,帮助在线文档: `安装目录/doc/git/html/gitignore.html`
+# 删除当前文件夹中的版本库(删除.git目录即可): `rm -rf .git`
+# `git init` 初始化后，会在`.git/`目录下创建一个版本库，其中`.git/config`为配置文件
+# 使用全局用户信息，在`~/.gitconfig`中写入:
+  {{{
+    [user]
+    name = kardinal
+    email = 2999am@gmail.com
+    *或者*
+    git config --global user.name "7color"
+    git config --global user.email voow@qq.com
+  }}}
+== 资源链接 ==
+- http://v.youku.com/v_playlist/f5227985o1p0.html  视频
+- http://roclinux.cn/?p=2115#more-2115   看日记学git
+- http://wenku.baidu.com/search?word=git&lm=0&od=0   百度文库
+- http://git-scm.com/
+- http://hi.baidu.com/felixwang/blog/item/7ce2cf1b2fccf7fdaf51338b.html  使用public/private key让putty(ssh)自动登录
+- http://www.kudelabs.com/2008/09/24/mysmgit-%E4%B9%8Bgit-on-windows%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B  mysmGit 之Git on Windows快速上手
+- http://www.ha97.com/book/OpenSource_Guide/ch28s05.html  git命令入门
+- http://help.github.com/msysgit-key-setup/  ssh keygen
+- http://pages.github.com/  git pages
+- http://eshilin.blog.163.com/blog/static/13288033020106610250138/  Git startup
+- http://eshilin.blog.163.com/blog/static/132880330201066102650433/ Git branch
+- http://eshilin.blog.163.com/blog/static/132880330201062991718683/ Git hook book
+<!-- Last modified:  2010-12-19 14:24:59 -->

@@ -1,0 +1,29 @@
+%title Zend_Controller相关
+ = Zend_Controller相关 =
+== Zend_Controller_Action_HelperBroker ==
+=== 经纪人助手获取view ===
+{{{class="brush: php"
+  //通过经纪人助手获取viewRenderer
+  $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+  //如果viewRenderer为空,则重新初始化view
+  if ($viewRenderer->view === null) {
+      $viewRenderer->initView();
+  }
+  $this->_view = $viewRenderer->view;
+}}}
+== Zend_Controller_Request ==
+=== 获取参数 ===
+| PHP中实现       | ZF中实现                                       |
+|-----------------+------------------------------------------------|
+| $_GET           | $this->_request->getQuery()                    |
+| $_POST          | $this->_request->getPost()                     |
+| $_REQEUEST      | $this->_getParams() or $this->_getParam("foo") |
+| $_COOKIE        | $this->_request()->getCookie()                 |
+| $_SERVER        | $this->_reqeust()->getServer()                 |
+| request headers | $this->_getHeader()                            |
+| *               | $this->_request->foo _直接访问__set()方法_     |
+| ...             | ...                                            |
+=== 设置参数 ===
+=== 判断请求类型 ===
+参考:(source) Zend/Controller/Request/Http.php
+<!-- Last modified:  2010-12-17 15:44:17 -->

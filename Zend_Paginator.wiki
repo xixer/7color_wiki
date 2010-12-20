@@ -1,0 +1,305 @@
+%title Zend_Paginator 相关
+ = Zend_Paginator 相关 =
+== Scrolling Style ==
+- `All` A scrolling style that returns every page in the collection.Usefun when it is necessary to make every page
+  available at once -- For example,when using a dropdow menu pagination control.
+- `Elastic` A google-like scrolling style. Incrementally expands the range to about twice the given page range, then
+  behaves like a slider. See the example link. [http://www.google.com/search?q=Zend+Framework Google Paginator]
+- `Jumping` A scrolling style in which the cursor advances to the upper bound of the page range, the page range
+  "jumps" to the next section, and the cursor moves back to the beginning of the range.<br>
+- `Sliding` A Yahoo! Search-link scrolling style. The cursor will advance to the middle of the range, then remain
+  there until the user reaches the end of the page set, at which point it will continue on to the end of the range and
+  the last page in the set. See the example link. [http://search.yahoo.com/search?p=Zend+Framework Yahoo Paginator]
+
+    *All* 显示所有页数 `$pagination->count()`,下拉列表时使用.<br>
+    *Elastic* 显示页数 `PageRange` 随当前页数 `CurrentPageNumber` 的增加而增加.<br>
+    *Jumping* 当当前页数 `CurrentPageNumber % PageRange == 0` 时,重新设置页数范围.<br>
+    *Sliding* 当前页数 `CurrentPageNumber` 始终居中于页数范围 `PageRange`.<br>
+=== 使用方法 ===
+{{{class="brush: php;"
+//在视图的paginationControl中指定Scrolling Style为Sliding
+$this->paginationControl($this->paginator, 'Sliding', 'my_pagination_control.phtml');
+//在控制器中直接设置
+Zend_Paginator::setDefaultScrollingStyle('Sliding');
+}}}
+=== 自定义Scrolling Style ===
+{{{class="brush: php"
+class Color_Paginator_ScrollingStyle_XXX extends Zend_Paginator_ScrollingStyle_Sliding
+{
+  public function getPages(Zend_Paginator $paginator, $pageRange = null)
+  {
+    //TODO
+  }
+}
+}}}
+== Adapter ==
+- `Array` 使用PHP Array.
+- `DbSelect` 使用Zend_Db_Select,返回Array
+- `DbTableSelect` 使用Zend_Db_Table_Select,返回Zend_Db_Table_Rowset_Abstract.
+- `Iterator` 使用Iterator迭代器.
+- `Null` 不使用Zend_Paginator管理数据,但仍可以利用分页控件.
+
+=== 使用方法 ===
+# 控制器中
+{{{class="brush: php"
+//使用Factory返回Zend_Paginator实例
+$paginator = Zend_Paginator::factory($array);
+
+//Adapter::Array
+//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($array));
+//Adapter::Zend_Db_Select
+//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbSelect($DbSelect));
+//Adapter::Zend_Db_Table_Select
+//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbTableSelect($DbTableSelect));
+//Adapter::Null
+//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Null($num_rows));
+//Adapter::Iterator
+//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Iterator($terator));
+
+$paginator->setCurrentPageNumber($this->_getParam('page'));//设置当前页数
+           ->setItemCountPerPage(10);//设置每页显示条数
+           ->setPageRange(10);       //设置PageRange
+
+//设置分页视图
+Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
+
+//设置缓存(Zend_Cache_Core $cache)
+Zend_Paginator::setCache($cache);
+
+//开启自动缓存
+$paginator->setCacheEnabled();
+
+//Assign
+$this->view->paginator = $paginator;
+}}}
+# 视图页面调用
+{{{class="brush: php;html-script:true"
+<?php 
+if (count($this->paginator)):
+	foreach ($this->paginator as $item): 
+?>
+<span><?php echo $item['username']?></span>
+<?php 
+	endforeach;
+endif;
+?>
+<div class="paginator">
+<?php echo $this->paginationControl($this->paginator, 
+                                      'Sliding', 
+                                      //如果调用其它module中的视图,可使用array(partialname, module)
+                                      'page/paginator.phtml',
+                                      array('requestParams' => $this->requestParams)); ?>
+</div>
+}}}
+=== 自定义Adapter ===
+{{{class="brush: php"
+class Color_Paginator_Adapter_XXX implements Zend_Paginator_Adapter_Interface
+{
+  //Returns an collection of items for a page.
+  public function getItems($offset, $itemCountPerPage)
+  {
+    //TODO
+  }
+
+  public function count()
+  {
+    //TODO 非必须实现
+  }
+}  
+}}}
+== pagination control ==
+=== 分页控制参数 ===
+| 属性             | 类型    | 描述                                       |
+|------------------+---------+--------------------------------------------|
+| first            | integer | 第一页                                     |
+| firstItemNumber  | integer | 当前页中数据项的第一条                     |
+| firstPageInRange | integer | PageRange中第一项(Scrolling Style)         |
+| current          | integer | 当前页数                                   |
+| currentItemCount | integer | 当前页显示条数                             |
+| itemCountPerPage | integer | 每页显示最大条数(即每页条数)               |
+| last             | integer | 最后页数                                   |
+| lastItemNumber   | integer | 当前页中数据欺罔的最后一条                 |
+| lastPageInRange  | integer | PageRange中最后一项(Scrolling Style)       |
+| next             | integer | 下一页数                                   |
+| pageCount        | integer | 总页数                                     |
+| pageInRange      | array   | 页数范围(PageRange)的数组(Scrolling Style) |
+| previous         | integer | 上一页数                                   |
+| totalItemCount   | integer | 总条数                                     |
+=== 搜索分页 ===
+{{{class="brush: php;html-script:true"
+<! --
+See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
+-->
+<?php if ($this->pageCount): ?>
+<div class="paginationControl">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+    &lt; Previous
+  </a> |
+<?php else: ?>
+  <span class="disabled">&lt; Previous</span> |
+<?php endif; ?>
+ 
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo $this->url(array('page' => $page)); ?>">
+        <?php echo $page; ?>
+    </a> |
+  <?php else: ?>
+    <?php echo $page; ?> |
+  <?php endif; ?>
+<?php endforeach; ?>
+ 
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+    Next &gt;
+  </a>
+<?php else: ?>
+  <span class="disabled">Next &gt;</span>
+<?php endif; ?>
+</div>
+<?php endif; ?>
+}}}
+=== 内容分页 ===
+{{{class="brush: php;html-script:true"
+<! --
+  See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
+-->
+ 
+<?php if ($this->pageCount): ?>
+<div class="paginationControl">
+<?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?>
+of <?php echo $this->totalItemCount; ?>
+ 
+<!-- First page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->first)); ?>">
+    First
+  </a> |
+<?php else: ?>
+  <span class="disabled">First</span> |
+<?php endif; ?>
+ 
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+    &lt; Previous
+  </a> |
+<?php else: ?>
+  <span class="disabled">&lt; Previous</span> |
+<?php endif; ?>
+ 
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+    Next &gt;
+  </a> |
+<?php else: ?>
+  <span class="disabled">Next &gt;</span> |
+<?php endif; ?>
+ 
+<!-- Last page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->last)); ?>">
+    Last
+  </a>
+<?php else: ?>
+  <span class="disabled">Last</span>
+<?php endif; ?>
+ 
+</div>
+<?php endif; ?>
+}}}
+=== 下拉列表分页 ===
+{{{class="brush: php;html-script:true"
+<?php if ($this->pageCount): ?>
+<select id="paginationControl" size="1">
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>
+  <option value="<?php echo $this->url(array('page' => $page));?>"<?php echo $selected ?>>
+    <?php echo $page; ?>
+  </option>
+<?php endforeach; ?>
+</select>
+<?php endif; ?>
+ 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+$('paginationControl').change(function() {
+    window.location = this.options[this.selectedIndex].value;
+})
+</script>
+}}}
+=== 自定义分页 ===
+{{{class="brush: php;html-script:true"
+<?php 
+if ($this->pageCount): 
+$this->requestParams ? '' : $this->requestParams = array(); 
+?>
+<!-- First page link -->
+<?php if (isset($this->previous) && ($this->current - $this->first >= count($this->pagesInRange)/2)): ?>
+  <a href="<?php echo $this->url($this->requestParams + array('page' => $this->first)); ?>">
+    <?php echo $this->first?>
+  </a> 
+  <a href="<?php echo $this->url($this->requestParams + array('page' => ($this->current-10 < 1 ? 1 : $this->current-10))); ?>">
+    ...
+  </a> 
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo $this->url($this->requestParams + array('page' => $page)); ?>">
+        <?php echo $page; ?>
+    </a> 
+  <?php else: ?>
+    <span class="currentpage"><?php echo $page; ?></span> 
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Last page link -->
+<?php if (isset($this->next) && ($this->last - $this->current >= count($this->pagesInRange)/2)): ?>
+  <a href="<?php echo $this->url($this->requestParams + array('page' => ($this->current+10>$this->last?$this->last:$this->current+10))); ?>">
+    ...
+  </a> 
+  <a href="<?php echo $this->url($this->requestParams + array('page' => $this->last)); ?>">
+    <?php echo $this->last?>
+  </a>
+<?php endif; ?>
+<span class="paginatorinfo">[ <?php echo $this->firstItemNumber; ?> /<?php echo $this->totalItemCount; ?> ]</span>
+<?php endif; ?>
+}}}
+== 自定义COUNT查询 ==
+{{{class="brush: php"
+$adapter = new Zend_Paginator_Adapter_DbSelect($db->select()->from('posts'));
+//自定义COUNT查询(当在其它表存储了count计数时,可以更快捷的得到count)
+$adapter->setRowCount(
+    $db->select()->from('item_counts', array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN => 'post_count'))
+);
+$paginator = new Zend_Paginator($adapter);
+}}}
+== 表单参数传递 ==
+# 在控制器中把表单接收的参数赋值
+{{{class="brush: php"
+$this->view->requestParams = $input->getUnescaped();
+}}}
+# 在视图中传递给paginationControl视图助手
+{{{class="brush: php"
+$this->paginationControl($this->paginator, 'Sliding', 'paginator.phtml', array('requestParams' =>
+      $this->requestParams));
+}}}
+# 在Paginator.phtml调用 `$this->requestParams`
+{{{class="brush: php"
+$this->requestParams ? '' : $this->requestParams = array(); 
+
+//方法一: 手动构建参数传递
+$url = '&'.http_build_query($this->requestParams);
+echo $this->url() . '?page=' . $this->first.$url;
+
+//方法二: 使用url助手建立标准路由链接
+echo $this->url($this->requestParams + array('page' => $this->first));
+}}}
+<!-- Last modified:  2010-12-19 05:26:18 -->

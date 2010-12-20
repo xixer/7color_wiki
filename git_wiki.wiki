@@ -1,0 +1,96 @@
+%title Github 搭建个人Wiki
+ = Github 搭建个人Wiki =
+== 需求分析 ==
+# 需要自动同步 `7color.github.com` 的所有文件
+# 有变更的文件才同步上去
+# 被删掉的文件也要能同步删掉
+# 由于文件修改频繁，不需要一旦修改就马上同步
+# 有需要时可以手动同步
+# 最好能排除一些不用放在线上的文件
+# 不能占用太多系统资源
+看了上面的需求分析，相信大家想到的都是各种版本管理工具。那就来试试时下最火的 git 吧！
+== 使用 Git + Batch file(Win) ==
+# 首先新建一个仓库，我这里使用的项目名是 `7color.github.com`。获得SSH地址 git@github.com:7color/7color.github.com.git。
+# 接着把 `7color.github.com` 文件夹初始化为 git 项目，push 到 github 上去。git命令参考：[[git|Git安装与配置]]
+# 接下来就要想办法做到自动提交。首先绕不开的问题就是用户验证。相信会用 Git 的人都已经按照Github上的指导建立了 ssh key 。但不知道你试过 ssh-agent 这个东西没有？简单来说，它可以让你不用每次提交修改到 git 服务器时都输入密码。请参照这篇教程进行设置：http://help.github.com/working-with-key-passphrases/ 。<br />
+  然后写一段批处理脚本，自动完成 commit, push 等操作。但经过本人亲身尝试，虽然 msysgit 可以让 Window 命令行里有 git 命令可以用，却不能在里面享用 ssh-agent 的登录状态，要做到免密码输入， 只能进入到 git bash ，然后用 vbs 模拟键盘输入 。这段 vbs 我是暂时没有能力写出来了。而且就算能写，还牵涉到判断提交是否已经成功的问题，就算我们爱折腾，也要量力而行哈。<br />
+  所以，一劳永逸的方法还是生成ssh key时不要设置 passphrase 。鉴于这个 key 并不那么容易被泄露，不要 passphrase 还是可以接受的。忘了怎么generate SSH key了？看这里： http://help.github.com/msysgit-key-setup/<br />
+
+批处理文件内容:
+{{{
+@echo off
+title Sync Blogger
+
+:PULL
+echo Blogger sync(pull) starting...
+echo .
+git pull 7color master
+
+echo .
+echo ==============================================================================
+git status
+
+echo .
+echo ==============================================================================
+:LABEL_CONFIRM
+set /p doPush=Pull from server completed, continue to push(y/n)?
+if "%doPush%"=="y" goto LABEL_PUSH
+if "%doPush%"=="n" goto exit
+goto LABEL_CONFIRM
+
+
+:LABEL_PUSH
+echo .
+
+:: get date and time
+:: for /f "delims=" %%a in ('date/t') do @set mydate=%%a
+:: for /f "delims=" %%a in ('time/t') do @set mytime=%%a
+set mydate=%DATE:~0,10%
+set mytime=%TIME:~0,8%
+set fvar=%mydate% %mytime%
+
+git add .
+git commit -a -m "Automatic commit at %fvar%"
+
+:: check if ssh-agent is running
+:: tasklist|find /i "ssh-agent.exe" || cmd /c ""C:\Program Files\Git\bin\sh.exe" --login -i" && exit
+call git push 7color master
+
+echo .
+echo .---------------------------------------------------------------------------.
+echo ' '
+echo ' Sync complete! '
+echo ' '
+echo `---------------------------------------------------------------------------+
+
+:LABEL_DONE
+pause
+exit
+    
+}}}
+另存为 sync.bat ，放到 `7color.githu.com` 目录下。然后将其添加到 Windows 的任务计划程序里，就可以做到定时推送。或者你不喜欢定时推送，每次有需要时再运行这个脚本也可以。
+# 绑定快捷键
+  {{{
+    map <C-F2> :exec 'silent !start cmd /k "cd /d "'.VimwikiGet('path_html').'" & sync"'<cr>
+    map <S-F2> :VimwikiAll2HTML<cr>
+    map <F2> :Vimwiki2HTML<cr>
+  }}}
+# 至此文件自动push完成
+
+== 在github上显示网页 ==
+本文仅介绍`Github Pages`的方式,其它方式请参考: [http://wiki.ktmud.com/tips/vim/ways-to-sync-vimwiki.html 丘迟的维基世界]
+
+关于Github Pages,请参考: [http://pages.github.com/ Github Pages帮助文档]设置CNAME,404等
+
+    *注*: github 页面生成后，会给用户发送提醒邮件。每次同步成功都有这个邮件，多烦人啊，到 https://github.com/account/notifications 去改一下设置吧
+
+== 资源链接 ==
+- http://blog.hotoo.me/use-vimwiki-for-blog.html 
+- http://blog.leezhong.com/tech/2010/08/25/make-github-as-blog-engine.html 
+- http://9hills.us/wiki/vimwiki.html 
+- http://wiki.ktmud.com/tips/vim/vimwiki-guide.html#toc_0.3.3 同步 vimwiki 到线上的各种方法 
+- http://wiki.ktmud.com/tips/vim/ways-to-sync-vimwiki.html 用 vimwiki 搭建你自己的维基世界 
+- https://github.com/ninehills/ninehills.github.com 
+- https://github.com/ktmud/kwiki_tpl 
+- https://github.com/hotoo/hotoo.github.com 
+<!-- Last modified:  2010-12-19 14:24:45 -->

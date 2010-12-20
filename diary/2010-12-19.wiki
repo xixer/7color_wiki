@@ -1,0 +1,9 @@
+%title 2010年12月19日 12:10 
+ = 2010年12月19日 12:10  =
+== 日记 ==
+无意中看到了[http://getfirebug.com/releases/lite/1.3/ firebug-lite],真是居家旅行杀人灭口之必备良药.
+== 已办事项 ==
+- [4] Zend Cookies相关
+- [4] 补充wiki
+- [4] WAP网站手机号码
+<!-- Last modified:  2010-12-19 23:35:05 -->

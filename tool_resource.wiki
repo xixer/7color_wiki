@@ -1,0 +1,53 @@
+%title Javascript 工具 & 资源
+ = Javascript 工具 & 资源 =
+== 工具 ==
+Firebug-lite:
+* http://getfirebug.com/releases/lite/1.3/
+
+Firebug console:
+- http://www.ihiro.org/firebug-console-panel-function
+- http://www.blueidea.com/tech/web/2009/6701_3.asp
+- http://getfirebug.com/wiki/index.php/Console_API
+
+FireQuery:
+- http://firequery.binaryage.com/#screencast
+- http://hi.baidu.com/freezesoul/blog/item/8c0723a4590669fe9052ee18.html
+
+FireBug(扩展):
+* http://msdn.microsoft.com/zh-tw/scriptjunkie/ee819093.aspx
+== 资源 ==
+Javascript作用域原理:
+- http://www.laruence.com/2009/05/28/863.html
+- http://www.360doc.com/content/10/1031/12/573136_65449400.shtml
+
+Javascript 获取元素位置:
+- http://cuckoosnest.javaeye.com/blog/469935
+- http://www.ruanyifeng.com/blog/2009/09/find_element_s_position_using_javascript.html
+- http://yanlp.javaeye.com/blog/691304
+
+Jquery1.2.6源码分析:
+* http://jljlpch.javaeye.com/?page=2
+
+jQuery 1.4 发布：15个新特性实例精讲
+* http://ktmud.com/javascript/jquery-1-4-new-features/ 
+
+王建硕(百姓网):
+* http://home.wangjianshuo.com/cn/archives.htm    
+
+W3shcool(JS):
+* http://www.w3school.com.cn/js/index.asp
+
+Jquery & Javascript 网站:
+* http://www.ihiro.org/category/front-end-engineering/page/3
+
+Jquery事件委派一次绑定多种事件:
+* http://www.ihiro.org/jquery-once-through-the-event-delegate-to-bind-a-variety-of-time-in-order-to-reduce-the-event-of-redundancy
+
+Javascript事件相关:
+- http://hi.baidu.com/liuwyong11/blog/item/c97901f875d62754242df2e6.html  (addEventListener参数相关){响应顺序:[true]:捕获capture由上向下,[false]:冒泡bubbing由下向上}
+- http://www.cnblogs.com/tyrael007/archive/2006/09/22/511936.html (拖动相关)
+- http://www.javaeye.com/topic/517899
+
+闭包的应用:
+* http://www.cnblogs.com/lyk831216/archive/2009/03/27/1423058.html
+<!-- Last modified:  2010-12-19 05:39:47 -->
