@@ -64,8 +64,7 @@
 # 为某一版本创建版本标签: `git tag` (版本标签存储在`.git/refs/tags/`目录)
 # 回溯到历史版本(`--soft` 回溯到已提交到索引但未提交到版本库的状态,`--hard` 将文件内容也一同回溯,`--mixed` 默认选项): `git reset`
   * `git reset` 回溯到git add之前的状态
-  * `git reset --soft`回溯到
-  * `git add`之后的状态
+  * `git reset --soft`回溯到`git add`之后的状态
 # 分支:
   * `git branch` 查看分支(`-a` 查看所有分支)
   * `git branch 分支名称` 新建分支
@@ -139,4 +138,4 @@
 - http://eshilin.blog.163.com/blog/static/132880330201066102650433/ Git branch
 - http://eshilin.blog.163.com/blog/static/132880330201062991718683/ Git hook book
 - http://rongjih.blog.163.com/blog/static/335744612010619111042465/ TortoiseGit密钥的配置
-<!-- Last modified:  2010-12-20 16:46:19 -->
+<!-- Last modified:  2010-12-20 20:50:00 -->
