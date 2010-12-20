@@ -11,13 +11,13 @@
 == 配置 ==
 # 生成keygen
   {{{
-    ssh-keygen -t rsa -C "voow@qq.com"
+    ssh-keygen -t rsa -C "email@email.com"
   }}}
   然后复制~/.ssh/id_rsa.pub的内容至[https://github.com/account#ssh_bucket github公钥],添加新的公钥,标题任意,公钥的内容为id_rsa.pub的内容
 # 为当前版本库添加用户信息
   {{{
     git config --global user.name "7color"
-    git config --global user.email voow@qq.com
+    git config --global user.email email@email.com
   }}}
 # 创建版本库目录
   {{{
@@ -39,9 +39,11 @@
   {{{
     git add README  
   }}}
-# 提交版本库,并添加备注(-m 添加备注,无参数 调用系统编辑器添加备注,-a 省略add,一次性提交索引与提交版本库)
+# 提交版本库,并添加备注(-m 添加备注,无参数 调用系统编辑器添加备注,-a 省略add,一次性提交索引与提交版本库,--amend
+  调整之前的commit)
   {{{
-    git commit -m "first commit"  
+    git commit -m "first commit"
+    git show #显示最后一次commit修改的内容
   }}}
 # 创建远程主机的标记7color
   {{{
@@ -68,14 +70,17 @@
   * `git branch` 查看分支(`-a` 查看所有分支)
   * `git branch 分支名称` 新建分支
   * `git checkout` 切换到指定分支(`-b` 创建分支并切换分支)
+  * `git checkout 文件名` 恢复某个已修改的文件#撤消未提交的修改
   * `git branch -D 分支名称` 删除分支(`-D`强行删除分支；`-d`只有分支内容被合并后才能删除)
-  * `git merge` 合并分支
+  * `git merge 分支名称` 合并指定分支到当前分支
+  * `git push git@github.com:ACCOUNT/SPACE.git :heads/BRANCH` 删除远程分支
+# 还原已提交的修改
+  * `git revert HEAD` 还原最近一次提交的修改
+  * `git revert commit-id` 还原指定版本的修改
 # 创建一个镜像版本库:
   * `git clone 原始版本库路径  镜像版本库路径(local)`
   * `git fetch origin` 更新 `origin` 分支。如果 `origin` 分支不是最新的原始版本库，会产生错误的补丁文件(不会自动`merge`,仅下载 & 更新索引)
   * `git rebase origin` 将工作迁移到最新原始版本库基础上
-  * `git format-patch origin` 生成补丁文件
-  * `git am` 将这个补丁应用到版本库
 # `git pull` 从协作者那里获取更新, 并自动merge到本地的当前分支上(`fetch+merge`)
 # `echo "test">.gitignore` 增加到忽略列表
 # 查看帮助 `git help gitignore`,帮助在线文档: `安装目录/doc/git/html/gitignore.html`
@@ -84,14 +89,44 @@
 # 使用全局用户信息，在`~/.gitconfig`中写入:
   {{{
     [user]
-    name = kardinal
-    email = 2999am@gmail.com
+    name = 7color
+    email = email@email.com
     *或者*
     git config --global user.name "7color"
-    git config --global user.email voow@qq.com
+    git config --global user.email email@email.com
   }}}
+== 错误描述 ==
+- "remote:error: refushing to delete the current branch:refs/heads/BRANCH to git@github.com:ACCOUNT/SPACE.git ![remote
+  rejected] BRANCH (deletion of the current branch prohibited) error: failed to push some refs to
+  'git@github.com:ACCOUNT/SPACE.git'"<br />
+  *解决方法*: 在github.com的管理员页面,切换当前分支,再次运行删除分支命令即可.
+- "Permission denied to SPACE.git denied to ACCOUNT"<br />
+  *解决方法*: 
+  * ssh-keygen -t rsa -C "email@email.com"
+  * 复制~/.ssh/id_rsa.pub内容
+  * 打开githu.com->账户设置->SSH公钥->添加新的公钥,保存
+  * ssh-add 完
+- "FATAL ERROR: Disconnected: No supported authentication methods available.fatal: The remote end hung up
+  unexpectedly."<br />
+  *解决方法*: 
+  * `ssh -v git@github.com`,如果出现successfully authenticated即表示公钥配置成功.
+  * 如果你同时安装了Git & TortoiseGit,可以使用`echo $GIT_SSH`查看ssh连接方式.<br />
+    使用其中一种方式,`declare GIT_SSH="D:\Git\bin\sh.exe"`,再次`echo $GIT_SSH`查看是否修改成功.接着再次push试试,应该就可以了.<br />
+    如果想一劳永逸的做法是`我的电脑->高级->环境变量`中添加/修改GIT_SSH的值.然后重启电脑.
+- 支持Git & TortoiseGit 共存<br />
+  *解决方法*: 使用puttygen.exe生成的private key复制到github.com的共钥中即可.
+- "To git@github.com:7color/7color.github.com.git ! [rejected]  master -> master (non-fast-forward)<br />
+  error: failed to push some refs to 'git@github.com:7color/7color.github.com.git'<br />
+  To prevent you from losing history, non-fast-forward updates were rejected Merge the remote changes (e.g. 'git pull') before pushing again.<br />
+  See the 'Note about fast-forwards' section of 'git push --help' for details."<br />
+  *解决方法*: 
+  * `git pull 7color master`,更新
+  * 编辑冲突
+  * `git commit -am "resolve conflict"`
+  * `git push 7color master`,OK
 == 资源链接 ==
 - http://v.youku.com/v_playlist/f5227985o1p0.html  视频
+- http://wangcongming.info/category/geek-tweak/  git-系列(*推荐*)
 - http://roclinux.cn/?p=2115#more-2115   看日记学git
 - http://wenku.baidu.com/search?word=git&lm=0&od=0   百度文库
 - http://git-scm.com/
@@ -103,4 +138,5 @@
 - http://eshilin.blog.163.com/blog/static/13288033020106610250138/  Git startup
 - http://eshilin.blog.163.com/blog/static/132880330201066102650433/ Git branch
 - http://eshilin.blog.163.com/blog/static/132880330201062991718683/ Git hook book
-<!-- Last modified:  2010-12-19 14:24:59 -->
+- http://rongjih.blog.163.com/blog/static/335744612010619111042465/ TortoiseGit密钥的配置
+<!-- Last modified:  2010-12-20 16:46:19 -->

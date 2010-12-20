@@ -1,6 +1,8 @@
-%title 2010年12月19日 - 日待办事项
- = 2010年12月19日 - 日待办事项 =
+%title 2010年12月19日 - 26日待办事项
+ = 2010年12月19日 - 26日待办事项 =
 - [0] github wiki问题补充
 - [0] 阅读Zend_Controller 
 - [4] batch file增加comment手动添加
-<!-- Last modified:  2010-12-20 10:20:59 -->
+- [4] github 多项目共用公钥,分支管理等 
+- [4] 解决 git & TortoiseGit 共存 
+<!-- Last modified:  2010-12-20 15:57:45 -->
