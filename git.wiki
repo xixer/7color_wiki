@@ -64,8 +64,7 @@
 # 为某一版本创建版本标签: `git tag` (版本标签存储在`.git/refs/tags/`目录)
 # 回溯到历史版本(`--soft` 回溯到已提交到索引但未提交到版本库的状态,`--hard` 将文件内容也一同回溯,`--mixed` 默认选项): `git reset`
   * `git reset` 回溯到git add之前的状态
-  * `git reset --soft`回溯到
-  * `git add`之后的状态
+  * `git reset --soft`回溯到`git add`之后的状态
 # 分支:
   * `git branch` 查看分支(`-a` 查看所有分支)
   * `git branch 分支名称` 新建分支
@@ -102,10 +101,10 @@
   *解决方法*: 在github.com的管理员页面,切换当前分支,再次运行删除分支命令即可.
 - "Permission denied to SPACE.git denied to ACCOUNT"<br />
   *解决方法*: 
-  * ssh-keygen -t rsa -C "email@email.com"
-  * 复制~/.ssh/id_rsa.pub内容
-  * 打开githu.com->账户设置->SSH公钥->添加新的公钥,保存
-  * ssh-add 完
+  * `ssh-keygen -t rsa -C "email@email.com"`
+  * 复制`~/.ssh/id_rsa.pub`内容
+  * 打开`githu.com->账户设置->SSH公钥->添加新的公钥`,保存
+  * `ssh-add` 完
 - "FATAL ERROR: Disconnected: No supported authentication methods available.fatal: The remote end hung up
   unexpectedly."<br />
   *解决方法*: 
@@ -120,10 +119,10 @@
   To prevent you from losing history, non-fast-forward updates were rejected Merge the remote changes (e.g. 'git pull') before pushing again.<br />
   See the 'Note about fast-forwards' section of 'git push --help' for details."<br />
   *解决方法*: 
-  * `git pull 7color master`,更新
+  * `git pull 7color master`
   * 编辑冲突
   * `git commit -am "resolve conflict"`
-  * `git push 7color master`,OK
+  * `git push 7color master` 完
 == 资源链接 ==
 - http://v.youku.com/v_playlist/f5227985o1p0.html  视频
 - http://wangcongming.info/category/geek-tweak/  git-系列(*推荐*)
@@ -139,4 +138,4 @@
 - http://eshilin.blog.163.com/blog/static/132880330201066102650433/ Git branch
 - http://eshilin.blog.163.com/blog/static/132880330201062991718683/ Git hook book
 - http://rongjih.blog.163.com/blog/static/335744612010619111042465/ TortoiseGit密钥的配置
-<!-- Last modified:  2010-12-20 16:46:19 -->
+<!-- Last modified:  2010-12-20 21:41:25 -->
