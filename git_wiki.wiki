@@ -16,7 +16,7 @@
   然后写一段批处理脚本，自动完成 commit, push 等操作。但经过本人亲身尝试，虽然 msysgit 可以让 Window 命令行里有 git 命令可以用，却不能在里面享用 ssh-agent 的登录状态，要做到免密码输入， 只能进入到 git bash ，然后用 vbs 模拟键盘输入 。这段 vbs 我是暂时没有能力写出来了。而且就算能写，还牵涉到判断提交是否已经成功的问题，就算我们爱折腾，也要量力而行哈。<br />
   所以，一劳永逸的方法还是生成ssh key时不要设置 passphrase 。鉴于这个 key 并不那么容易被泄露，不要 passphrase 还是可以接受的。忘了怎么generate SSH key了？看这里： http://help.github.com/msysgit-key-setup/<br />
 
-批处理文件内容:
+批处理文件内容(增加了commit手动添加):
 {{{
 @echo off
 title Sync Blogger
@@ -41,16 +41,22 @@ goto LABEL_CONFIRM
 
 :LABEL_PUSH
 echo .
-
+set /p commit=Enter commit:
+if "%commit%"==""(goto LABEL_AUTOMATIC) else (goto LABEL_MANUAL)
+: LABEL_AUTOMATIC
 :: get date and time
 :: for /f "delims=" %%a in ('date/t') do @set mydate=%%a
 :: for /f "delims=" %%a in ('time/t') do @set mytime=%%a
 set mydate=%DATE:~0,10%
 set mytime=%TIME:~0,8%
 set fvar=%mydate% %mytime%
+set commit="Automatic commit at %fvar%"
+
+: LABEL_MANUAL
+set commit=%commit%
 
 git add .
-git commit -a -m "Automatic commit at %fvar%"
+git commit -a -m %commit%
 
 :: check if ssh-agent is running
 :: tasklist|find /i "ssh-agent.exe" || cmd /c ""C:\Program Files\Git\bin\sh.exe" --login -i" && exit
@@ -66,7 +72,6 @@ echo `--------------------------------------------------------------------------
 :LABEL_DONE
 pause
 exit
-    
 }}}
 另存为 sync.bat ，放到 `7color.githu.com` 目录下。然后将其添加到 Windows 的任务计划程序里，就可以做到定时推送。或者你不喜欢定时推送，每次有需要时再运行这个脚本也可以。
 # 绑定快捷键
@@ -93,4 +98,4 @@ exit
 - https://github.com/ninehills/ninehills.github.com 
 - https://github.com/ktmud/kwiki_tpl 
 - https://github.com/hotoo/hotoo.github.com 
-<!-- Last modified:  2010-12-19 14:24:45 -->
+<!-- Last modified:  2010-12-21 12:26:48 -->

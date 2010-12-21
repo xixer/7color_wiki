@@ -1,0 +1,9 @@
+%title 2010年12月21日 18:13
+ = 2010年12月21日 18:13 =
+== 日记 ==
+今天about.me的邀请终于"姗姗来迟",找了一个卡通美女做背景,哈哈
+URL: [http://about.me/7color]
+== 已办事项 ==
+- [4] batch file commit时手动添加备注[ ] 
+- [2] Zend_Captcha完成50%  
+<!-- Last modified:  2010-12-21 18:16:15 -->
