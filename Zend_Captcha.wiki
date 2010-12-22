@@ -1,0 +1,150 @@
+%title Zend_Captcha
+ = Zend_Captcha =
+== 注 ==
+- 以下captcha适配器皆可自定义,或者重写,具体请参照源代码.
+- 以下captcha适配器的配置参数options,也可以通过`setXxx()`的方式设置,或者使用`Zend_Config_In
+- 以下captcha适配器的`isValid()`,如果可以保障第一个参数包含所需的值时,可以省略第二参数,直接传递`$this->_requet->getPost()`
+- `Zend_Captcha_Image`的`startImage`参数并非是背景图片,如果需要可以`extends Zend_Captcha_Image`,重写`_generateImage`方法
+== Zend_Captcha_Recaptcha ==
+*ReCaptcha*适配器使用`Zend_Service_ReCaptcha`来生成校验captchas.支持图片与音频验证 [http://www.google.com/recaptcha/demo/ DEMO],
+同时支持EMAIL(在页面上显示EMAIL时,避免spam).[http://code.google.com/intl/zh-CN/apis/recaptcha/ 了解更多].使用方法如下:
+{{{class="brush: php:html-script:true"
+<?php
+$captcha = new Zend_Captcha_Recaptcha(array(
+    'theme'   => 'white',//主题
+    'pubkey'=>'...',     //公钥(Public Key)
+    'privkey'=>'...')    //私钥(Private Key)
+);
+//增加配置选项(默认仅支持lang,theme)
+$captcha->getService()->setOption('custom_translations', array(
+                    'instructions_visual'=>"请输入两个单词:",
+                    'instructions_audio'=>"请输入验证码:",
+                    'play_again'=> "再听一次",
+                    'cant_hear_this'=>"听不到?下载MP3格式",
+                    'visual_challenge'=> "字符",
+                    'audio_challenge'=>"朗读",
+                    'refresh_btn'=>"刷新",
+                    'help_btn'=> "帮助",
+                    'incorrect_try_again'=>"验证码错误,再试一次?"));
+
+if($this->_request->isPost()){
+    $request_data = array(
+          'recaptcha_challenge_field'=>$this->_getParam('recaptcha_challenge_field'), 
+          'recaptcha_response_field'=>$this->_getParam('recaptcha_response_field')
+    );
+    //验证
+    if ($captcha->isValid($request_data, $this->_request->getPost())){
+        echo 'Correct';
+    }else {
+        echo 'Incorrect';
+        $captcha->setMessage('出错拉', 'badCaptcha');//设置消息模板,如果使用Translator,该设置无效
+        Zend_Debug::dump($captcha->getMessages());
+    }
+}else {
+    $this->view->captcha = $captcha->render();
+}
+
+//phtml:
+?>
+<form id="form1" name="form1" action="#" method="post">
+	<?php echo $this->captcha?>
+	<input type="submit">
+</form>
+}}}
+== Zend_Captcha_Dumb ==
+*Dumb*适配器只用于测试或者最后方案.继承`Zend_Captcha_Word`,提供了随机字符串需要用反序输入来校验(`strrev`).
+{{{class="brush: php;html-script:true"
+<?php
+$captcha = new Zend_Captcha_Dumb(array(
+    //'name' => 'foo',   //用于替换input的name的值,captcha[input]或者captcha[id]中的captcha,Zend_Form表单生成使用
+    'wordLen' => 6,      //生成长度
+    'timeout' => 300,    //SSL
+    '_useNumbers'=>false //仅字符
+));
+if($this->_request->isPost()){
+    if($captcha->isValid($this->_getParam('captcha'), $this->_request->getPost())){
+      //Correct
+    }else{
+      //Incorrect
+    }
+}else {
+    $this->view->captcha_id = $captcha->generate();
+    $this->view->captch = $captcha->render();
+}
+
+//phtml:
+?>
+<form id="form1" name="form1" action="#" method="post">
+  <input type="input" name="captcha[input]" id="captcha-input">
+  <input type="hidden" name="captcha[id]" id="captcha-id" value="<?php echo $this->captcha_id?>">
+  <input type="submit">
+</form>
+}}}
+== Zend_Captcha_Figlet ==
+*Figlet*适配器利用`Zend_Text_Figlet` 来展示一个FIGlet text. Figlet Captchas只限于字符.你可以在[http://www.figlet.org/fontdb.cgi 这里]下载Figlet字体.
+{{{class="brush: php;html-script:true"
+<?php
+$captcha = new Zend_Captcha_Figlet(array(
+    'font'=>'fonts/digital.flf', //指定新字体(可使用相对路径)
+    'wordLen' => 6,              //生成长度
+    'timeout' => 300             //SSL
+));
+if($this->_request->isPost()){
+    if($captcha->isValid($this->_getParam('captcha'), $this->_request->getPost())){
+      //Correct
+    }else{
+      //Incorrect
+    }
+}else {
+    $this->view->captcha_id = $captcha->generate();
+    $this->view->captch = $captcha->render();
+}
+
+//phtml:
+?>
+<form id="form1" name="form1" action="#" method="post">
+  <input type="input" name="captcha[input]" id="captcha-input">
+  <input type="hidden" name="captcha[id]" id="captcha-id" value="<?php echo $this->captcha_id?>">
+  <input type="submit">
+</form>
+}}}
+== Zend_Captcha_Image ==
+*Image*适配器使用生成的字符解析为图像. 需要GD库支持.目前仅支持PNG格式.
+{{{class="brush: php;html-script:true"
+<?php
+$captcha = new Zend_Captcha_Image(array(
+    'wordLen' 		=> 5,                  //字符长度
+    'fontsize' 		=> 18,                 //字体大小
+    'width' 		=> 120,                //图像宽度
+    'height' 	 	=> 40,                 //图像高度
+    'dotNoiseLevel' => 2,                  //噪点数
+    'lineNoiseLevel'=> 5,                  //干扰线条
+    'timeout' 		=> 10,                 //SSL
+    'font' 			=> 'fonts/Faktos.ttf', //字体文件
+    'imgDir' 		=> './captcha/',       //生成的图像目录
+    'imgUrl' 		=> '/captcha/',        //图像访问网址(相对路径)
+    'gcFreq' 		=> 2,                  //执行垃圾收集频率(mt_rand(1, gcFreq) == 1)
+    'expiration' 	=> 10,                 //生成图像过期(秒)
+    'imgAlt'		=> '验证码',           //图片ALT
+    'startImage'    => 'images/startimage.png'  //基于该图片生成(非背景图片)
+));
+if($this->_request->isPost()){
+    if($captcha->isValid($this->_getParam('captcha'), $this->_request->getPost())){
+      //Correct
+    }else{
+      //Incorrect
+    }
+}else {
+    $this->view->captcha_id = $captcha->generate();
+    $this->view->captch = $captcha->render();
+}
+
+//phtml:
+?>
+<form id="form1" name="form1" action="#" method="post">
+  <input type="input" name="captcha[input]" id="captcha-input">
+  <input type="hidden" name="captcha[id]" id="captcha-id" value="<?php echo $this->captcha_id?>">
+  <input type="submit">
+</form>
+}}}
+<!-- Last modified:  2010-12-22 17:58:38 -->
