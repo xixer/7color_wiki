@@ -8,8 +8,4 @@
 - [4] 解决 git & TortoiseGit 共存
 - [2] CURL Wap站采集
 - [0] Javascript DOM高级程序设计继续阅读 
-<<<<<<< HEAD
-<!-- Last modified:  2010-12-22 18:28:11 -->
-=======
-<!-- Last modified:  2010-12-22 01:12:12 -->
->>>>>>> 89b7ef01b02c1552604b02a15d2a66adda8ee4c9
+<!-- Last modified:  2010-12-22 18:37:50 -->
