@@ -6,7 +6,7 @@
 - 以下captcha适配器的`isValid()`,如果可以保障第一个参数包含所需的值时,可以省略第二参数,直接传递`$this->_requet->getPost()`
 - `Zend_Captcha_Image`的`startImage`参数并非是背景图片,如果需要可以`extends Zend_Captcha_Image`,重写`_generateImage`方法
 == Zend_Captcha_Recaptcha ==
-*ReCaptcha*适配器使用`Zend_Service_ReCaptcha`来生成校验captchas.支持图片与音频验证 [http://www.google.com/recaptcha/demo/ DEMO],
+*ReCaptcha* 适配器使用`Zend_Service_ReCaptcha`来生成校验captchas.支持图片与音频验证 [http://www.google.com/recaptcha/demo/ DEMO],
 同时支持EMAIL(在页面上显示EMAIL时,避免spam).[http://code.google.com/intl/zh-CN/apis/recaptcha/ 了解更多].使用方法如下:
 {{{class="brush: php:html-script:true"
 <?php
@@ -52,7 +52,7 @@ if($this->_request->isPost()){
 </form>
 }}}
 == Zend_Captcha_Dumb ==
-*Dumb*适配器只用于测试或者最后方案.继承`Zend_Captcha_Word`,提供了随机字符串需要用反序输入来校验(`strrev`).
+*Dumb* 适配器只用于测试或者最后方案.继承`Zend_Captcha_Word`,提供了随机字符串需要用反序输入来校验(`strrev`).
 {{{class="brush: php;html-script:true"
 <?php
 $captcha = new Zend_Captcha_Dumb(array(
@@ -81,7 +81,7 @@ if($this->_request->isPost()){
 </form>
 }}}
 == Zend_Captcha_Figlet ==
-*Figlet*适配器利用`Zend_Text_Figlet` 来展示一个FIGlet text. Figlet Captchas只限于字符.你可以在[http://www.figlet.org/fontdb.cgi 这里]下载Figlet字体.
+*Figlet* 适配器利用`Zend_Text_Figlet` 来展示一个FIGlet text. Figlet Captchas只限于字符.你可以在[http://www.figlet.org/fontdb.cgi 这里]下载Figlet字体.
 {{{class="brush: php;html-script:true"
 <?php
 $captcha = new Zend_Captcha_Figlet(array(
@@ -109,7 +109,7 @@ if($this->_request->isPost()){
 </form>
 }}}
 == Zend_Captcha_Image ==
-*Image*适配器使用生成的字符解析为图像. 需要GD库支持.目前仅支持PNG格式.
+*Image* 适配器使用生成的字符解析为图像. 需要GD库支持.目前仅支持PNG格式.
 {{{class="brush: php;html-script:true"
 <?php
 $captcha = new Zend_Captcha_Image(array(
@@ -147,4 +147,4 @@ if($this->_request->isPost()){
   <input type="submit">
 </form>
 }}}
-<!-- Last modified:  2010-12-22 17:58:38 -->
+<!-- Last modified:  2010-12-22 18:33:45 -->
