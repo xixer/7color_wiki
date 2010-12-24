@@ -54,7 +54,7 @@ $paginator = Zend_Paginator::factory($array);
 //Adapter::Null
 //$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Null($num_rows));
 //Adapter::Iterator
-//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Iterator($terator));
+//$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Iterator($iterator));
 
 $paginator->setCurrentPageNumber($this->_getParam('page'));//设置当前页数
            ->setItemCountPerPage(10);//设置每页显示条数
@@ -302,4 +302,4 @@ echo $this->url() . '?page=' . $this->first.$url;
 //方法二: 使用url助手建立标准路由链接
 echo $this->url($this->requestParams + array('page' => $this->first));
 }}}
-<!-- Last modified:  2010-12-19 05:26:18 -->
+<!-- Last modified:  2010-12-24 10:28:31 -->

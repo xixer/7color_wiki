@@ -2,7 +2,7 @@
  = Zend_Captcha =
 == 注 ==
 - 以下captcha适配器皆可自定义,或者重写,具体请参照源代码.
-- 以下captcha适配器的配置参数options,也可以通过`setXxx()`的方式设置,或者使用`Zend_Config_In
+- 以下captcha适配器的配置参数options,也可以通过`setXxx()`的方式设置,或者使用`Zend_Config_Ini`
 - 以下captcha适配器的`isValid()`,如果可以保障第一个参数包含所需的值时,可以省略第二参数,直接传递`$this->_requet->getPost()`
 - `Zend_Captcha_Image`的`startImage`参数并非是背景图片,如果需要可以`extends Zend_Captcha_Image`,重写`_generateImage`方法
 == Zend_Captcha_Recaptcha ==
@@ -147,4 +147,4 @@ if($this->_request->isPost()){
   <input type="submit">
 </form>
 }}}
-<!-- Last modified:  2010-12-22 18:33:45 -->
+<!-- Last modified:  2010-12-24 09:05:38 -->
