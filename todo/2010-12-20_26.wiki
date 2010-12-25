@@ -6,6 +6,7 @@
 - [4] batch file comment时手动添加备注
 - [4] github 多项目共用公钥,分支管理等 
 - [4] 解决 git & TortoiseGit 共存
-- [2] CURL Wap站采集
+- [3] CURL Wap站采集
 - [0] Javascript DOM高级程序设计继续阅读 
-<!-- Last modified:  2010-12-22 18:37:50 -->
+- [0] 阅读计划 
+<!-- Last modified:  2010-12-25 18:43:38 -->
