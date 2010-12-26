@@ -13,4 +13,6 @@
 - [[git_wiki|Github 搭建个人wiki]]
 == Vim ==
 - [[vim_pattern_instance|Vim 正则实例]]
-<!-- Last modified:  2010-12-22 18:07:08 -->
+- [[vim_help|如何使用帮助]]
+- [[vim_tips|技巧]]
+<!-- Last modified:  2010-12-26 22:21:34 -->
