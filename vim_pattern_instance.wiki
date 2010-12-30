@@ -86,9 +86,13 @@
   TOo
   :%s/^\(\w\{2\}\)\(.*\)/\U\1\L\2/g  
 }}}
+# 删除每行第二个空格之后的内容
+{{{
+  :s/[^ ]*\ [^ ]*\ \zs.*$//  
+}}}
 == 资源链接 ==
 - http://easwy.com 易水博客
 - http://blog.csdn.net/easwy/default.aspx?PageNumber=3  易水CSDN
 - http://www.rayninfo.co.uk/vimtips.html  vimtips
 
-<!-- Last modified:  2010-12-26 21:07:45 -->
+<!-- Last modified:  2010-12-30 09:01:27 -->
