@@ -1,5 +1,6 @@
 %title Wiki索引
  = 七彩映像.Wiki 索引 =
+[code/code.jpg]
 == Zend Framework ==
 - Zend_Application
 - Zend_Db
@@ -15,4 +16,4 @@
 - [[vim_pattern_instance|Vim 正则实例]]
 - [[vim_help|如何使用帮助]]
 - [[vim_tips|技巧]]
-<!-- Last modified:  2010-12-26 22:21:34 -->
+<!-- Last modified:  2011-01-04 00:11:26 -->

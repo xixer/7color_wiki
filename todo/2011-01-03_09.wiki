@@ -1,0 +1,8 @@
+%title 2011年01月03日 - 09日待办事项
+ = 2011年01月03日 - 09日待办事项 =
+- [4] vimwiki 增加文件夹忽略 & 优化文件忽略
+- [4] Calendar.vim chinese language support.
+- [4] vimwiki template footer.tpl add %time_stamp%
+- [4] vimwiki 'o' or 'O'时,vimwiki_lst#kbd_oO(cmd)的处理方式
+- [0] ZSConfig.epf 首选项导出
+<!-- Last modified:  2011-01-04 00:05:07 -->

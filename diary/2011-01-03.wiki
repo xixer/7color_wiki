@@ -1,0 +1,10 @@
+%title 2011年01月03日 13:48 
+ = 2011年01月03日 13:48  =
+== 日记 ==
+加油 2011!!
+== 已办事项 ==
+- [4] vimwiki 增加文件夹忽略 & 优化文件忽略
+- [4] Calendar.vim chinese language support.
+- [4] 年度总结 & 年度新计划
+- [4] vimwiki template footer.tpl add %time_stamp%
+<!-- Last modified:  2011-01-03 22:23:48 -->
