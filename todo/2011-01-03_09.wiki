@@ -4,5 +4,7 @@
 - [4] Calendar.vim chinese language support.
 - [4] vimwiki template footer.tpl add %time_stamp%
 - [4] vimwiki 'o' or 'O'时,vimwiki_lst#kbd_oO(cmd)的处理方式
-- [0] ZSConfig.epf 首选项导出
-<!-- Last modified:  2011-01-04 00:05:07 -->
+- [4] ZSConfig.epf 首选项导出
+- [4] 更新VIM plugins
+- [0] Read start.
+<!-- Last modified:  2011-01-04 18:05:32 -->

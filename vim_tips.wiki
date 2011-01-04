@@ -38,8 +38,8 @@ q: 或 :_CTRL-F
 }}}
 # VISUAL 模式 (方便增加 HTML 标签)
 {{{
-  :vmap sb "zdi<C-R>z<ESC> : 在 VISUALLY模式下将选中的文本前后分别加上
-  :vmap st "zdi<?= <C-R>z ?><ESC> : 加上 <?= ?>
+  vmap sb "zdi<C-R>z<ESC> : 在 VISUALLY模式下将选中的文本前后分别加上
+  vmap st "zdi<?= <C-R>z ?><ESC> : 加上 <?= ?>
 }}}
 # 快捷键
 {{{
@@ -48,4 +48,8 @@ q: 或 :_CTRL-F
   /<C-R><C-W> : 把单个<cword>单词放入搜索或者命令行
   /<C-R><C-A> : 把字符串中有的单词<CWORD>放入搜索或者命令行
 }}}
-<!-- Last modified:  2010-12-28 18:08:02 -->
+# 重新选择上一次的选择区和相同的模式
+{{{
+  gv  
+}}}
+<!-- Last modified:  2011-01-04 16:04:38 -->
