@@ -1,0 +1,107 @@
+%title 插件若干修改
+ = 插件修改若干 =
+== css.vim ==
+    该插件([[http://lilydjwg.is-programmer.com/pages/19540.html|css.vim]])高亮任意文件中的#FFFFFF式色彩字符串及单行显示多个#XXXXXX<br />
+    *L121*: function s:UpdateAll() 修改为 function! s:UpdateAll()<br />
+    *L141*: command UpdateColor call s:UpdateAll()修改为command! UpdateAll call s:UpdateAll<br />
+== *complete.vim ==
+    修改/vim73/autoload/下*complete.vim在进行ominicomplete时, m =~? a:base等的判断
+== supertab.vim ==
+    *L67*: 增加let g:bUserIgnoreCase = &ignorecase<br />
+    *L309*: 在function! s:SuperTab(command)行下设置set noignorecase<br />
+    *L479*: 在function! s:ReleaseKeyPresses()函数中if b:capturing结束前还原ignored,设置if g:bUserIgnoreCase   let
+    &ignorecase = g:bUserIgnoreCase  endif
+== xptemplate.vim ==
+    新建wiki文件类型snippets<br />
+    1. set filetype?查看文件类型<br />
+    2. 在/vimfiles/personal/ftplugin/新建文件类型/后缀名.xpt.vim
+== vimwiki.vim ==
+=== 忽略指定文件或文件夹 ===
+    修改/vimfiles/autoload/vimwiki_html.vim中delete_html_files函数如下:
+{{{
+  function! s:delete_html_files(path) "{{{
+  let htmlfiles = split(glob(a:path.'**/*.html'), '\n')
+  let ignore_files = split(g:vimwiki_ignore_html_files, ',')
+  if !empty(ignore_files)
+    for ignore_file in ignore_files
+      call filter(htmlfiles, 'v:val !~ "'. a:path . ignore_file .'"')
+    endfor
+  endif
+  for fname in htmlfiles
+    try
+      call delete(fname)
+    catch
+      echomsg 'vimwiki: Cannot delete '.fname
+    endtry
+  endfor
+endfunction "}}}
+}}}
+=== 显示事项进度,去除checkbox ===
+    修改/vimfiles/autoload/vimwiki_html.vim中add_checkbox函数如下:
+{{{
+  function! s:add_checkbox(line, rx_list, st_tag, en_tag) "{{{
+    let st_tag = a:st_tag
+    let en_tag = a:en_tag
+
+    let chk = matchlist(a:line, a:rx_list)
+    if len(chk) > 0
+      if chk[1] == g:vimwiki_listsyms[4]
+        let st_tag .= '<del>['.g:vimwiki_listsyms[4].']'
+        let en_tag = '</del>'.a:en_tag
+      elseif chk[1] == g:vimwiki_listsyms[0]
+        let st_tag .= '['.g:vimwiki_listsyms[0].']'
+      elseif chk[1] == g:vimwiki_listsyms[3]
+        let st_tag .= '['.g:vimwiki_listsyms[3].']'
+      elseif chk[1] == g:vimwiki_listsyms[2]
+        let st_tag .= '['.g:vimwiki_listsyms[2].']'
+      else
+        let st_tag .= '['.g:vimwiki_listsyms[1].']'
+      endif
+    endif
+    return [st_tag, en_tag]
+  endfunction "}}}
+}}}
+=== 修改回车,o,O时默认事项值 ===
+    修改/vimfiles/autoload/vimwiki_lst.vim中vimwiki_lst#kbd_cr及vimwiki_lst#kbd_oO函数如下:
+{{{
+function! vimwiki_lst#kbd_cr() "{{{
+  " This function is heavily relies on proper 'set comments' option.
+  let cr = "\<CR>"
+  if getline('.') =~ s:rx_cb_list_item()
+    let cr .= '[ ] '
+  endif
+  return cr
+endfunction "}}}
+function! vimwiki_lst#kbd_oO(cmd) "{{{
+  " cmd should be 'o' or 'O'
+
+  let beg_lnum = foldclosed('.')
+  let end_lnum = foldclosedend('.')
+  if end_lnum != -1 && a:cmd ==# 'o'
+    let lnum = end_lnum
+    let line = getline(beg_lnum)
+  else
+    let line = getline('.')
+    let lnum = line('.')
+  endif
+
+    " let line = substitute(m, '\s*$', ' ', '').'[ ] '.li_content
+  let m = matchstr(line, s:rx_list_item())
+  let res = ''
+  if line =~ s:rx_cb_list_item()
+    let res = substitute(m, '\s*$', ' ', '').'[0] '
+  elseif line =~ s:rx_list_item()
+    let res = substitute(m, '\s*$', ' ', '')
+  elseif &autoindent || &smartindent
+    let res = matchstr(line, '^\s*')
+  endif
+  if a:cmd ==# 'o'
+    call append(lnum, res)
+    call cursor(lnum + 1, col('$'))
+  else
+    call append(lnum - 1, res)
+    call cursor(lnum, col('$'))
+  endif
+endfunction "}}}
+}}}
+<!-- Last modified:  2011-01-07 22:47:51 -->

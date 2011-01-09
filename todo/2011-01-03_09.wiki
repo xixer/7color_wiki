@@ -10,5 +10,5 @@
 - [4] superTab回车处理 & 增加仅罗列首字母选项
 - [4] 解决superTab.vim,ignorecase开启时,字符删除
 - [4] 解决*complete.vim,检索^开始的字符[0] 
-- [0] superTab & *complete解决方法笔记
-<!-- Last modified:  2011-01-07 19:08:45 -->
+- [4] superTab & *complete解决方法笔记
+<!-- Last modified:  2011-01-08 16:10:57 -->

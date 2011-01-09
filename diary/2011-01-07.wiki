@@ -5,4 +5,5 @@
 == 已办事项 ==
 - [4] 解决superTab.vim,ignorecase开启时,字符删除
 - [4] *complete.vim,检索^开始的字符
-<!-- Last modified:  2011-01-07 19:07:12 -->
+- [4] 使用依云css.vim,修正在一个缓冲区中打开多文件时,颜色不渲染的问题
+<!-- Last modified:  2011-01-07 20:21:54 -->
