@@ -18,7 +18,8 @@ vim的帮助很详细,但若不了解有时的确不知道应该如何输入关�
 == 查找帮助 ==
 - 在输入关键词的时候,可以按 <Tab>键补全
 - 键入"`:help word`", 接着键入 `CTRL-D` 可以看到匹配"word" 的帮助主题, `CTRL-A` 可以列出全部模式
-- 也可用"`:helpg word`". `:helpg[rep] {pattern}` 搜索所有的帮助文本并给出一个匹配 `{pattern}` 行的列表.
+- 也可用"`:helpg word`". `:helpg[rep] {pattern}`
+  搜索所有的帮助文本并给出一个匹配 `{pattern}`行的列表.`cn`下一项,`cp`上一项
 
 == 其它 ==
     :h quickref : VIM 快速参考页<br />
@@ -33,4 +34,4 @@ vim的帮助很详细,但若不了解有时的确不知道应该如何输入关�
     :h i_CTRL-R : 在插入模式中 <C-R>的解释<br />
     :h c_CTRL-R : 在命令模式中 <C-R> 的解释<br />
     :h v_CTRL-V : 视图模式<br />
-<!-- Last modified:  2010-12-26 19:22:08 -->
+<!-- Last modified:  2011-01-16 21:47:46 -->

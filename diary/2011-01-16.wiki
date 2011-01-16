@@ -1,0 +1,9 @@
+%title 2011年01月16日 18:00
+ = 2011年01月16日 18:00 =
+== 日记 ==
+通宵修改vimrc.
+== 已办事项 ==
+- [4] 参考 & 修改 & 整理vimrc
+- [4] surround(plugin) & molokai(colorscheme) & zencoding(upload)
+- [4] 整理notice目录
+<!-- Last modified:  2011-01-17 01:52:33 -->
