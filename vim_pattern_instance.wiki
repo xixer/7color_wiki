@@ -17,16 +17,6 @@
   +1   定位到下一行
   m-1 移到上面去
 }}}
-# 统计字数
-{{{
-  visual模式下, 选中要查字数的片段后,按g + C-g
-}}}
-# 居中光标所在行
-{{{
-  zz : 将当前行置于屏幕中间
-  zt : 将当前行置于屏幕顶端
-  zb: 将当前行置于屏幕底端
-}}}
 # 非贪婪匹配
 {{{
   默认贪婪匹配到行末：/<a.*> 
@@ -95,4 +85,4 @@
 - http://blog.csdn.net/easwy/default.aspx?PageNumber=3  易水CSDN
 - http://www.rayninfo.co.uk/vimtips.html  vimtips
 
-<!-- Last modified:  2010-12-30 09:01:27 -->
+<!-- Last modified:  2011-01-20 01:13:45 -->
