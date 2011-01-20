@@ -3,6 +3,7 @@
 - [0] ~~查看vimwiki更新~~
 - [0] ~~git中文文件名乱码~~
 - [0] surround.vim & ACK使用了解
+- [4] vimc 整理 
 - [0] vimc 后续整理 
 - [0] 继续阅读计划
-<!-- Last modified:  2011-01-18 18:32:14 -->
+<!-- Last modified:  2011-01-21 02:04:46 -->

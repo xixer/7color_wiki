@@ -1,9 +1,9 @@
 %title 2011年01月19日 23:38 
  = 2011年01月19日 23:38  =
 == 日记 ==
-now read~
+acp的Ctrl-h占用问题,一怒之下把i_Ctrl-光标移动键盘映射全注释了.
 == 已办事项 ==
 - [4] Zend_Captcha 之 ajax应用
 - [4] 更新 & 比对 supertab.vim更新
 - [4] 整理vimc,修改键映射等
-<!-- Last modified:  2011-01-20 01:09:35 -->
+<!-- Last modified:  2011-01-21 02:02:42 -->
