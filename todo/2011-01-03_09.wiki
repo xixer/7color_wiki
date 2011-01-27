@@ -6,9 +6,9 @@
 - [4] vimwiki 'o' or 'O'时,vimwiki_lst#kbd_oO(cmd)的处理方式
 - [4] ZSConfig.epf 首选项导出
 - [4] 更新VIM plugins
-- [0] Read start.
+- [4] Read start.
 - [4] superTab回车处理 & 增加仅罗列首字母选项
 - [4] 解决superTab.vim,ignorecase开启时,字符删除
 - [4] 解决*complete.vim,检索^开始的字符[0] 
 - [4] superTab & *complete解决方法笔记
-<!-- Last modified:  2011-01-08 16:10:57 -->
+<!-- Last modified:  2011-01-27 18:18:50 -->
