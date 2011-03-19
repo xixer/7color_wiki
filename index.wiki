@@ -19,4 +19,5 @@
 - [[plugin_edit|插件若干修改]]
 == 诗词 ==
 - [[laxilamu_duoduo|班扎古鲁白玛的沉默]]
+- [[wulingchun_liqingzhao|武陵春-李清照]]
 <!-- Last modified:  2011-01-10 00:24:53 -->
