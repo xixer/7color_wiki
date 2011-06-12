@@ -1,5 +1,5 @@
 %title Wiki索引
- = 七彩映像.Wiki 索引 =
+ = 等待，是一生最初的苍老。 =
 [images/code.jpg]
 == Zend Framework ==
 - Zend_Application
@@ -22,4 +22,4 @@
 - [[wulingchun_liqingzhao|武陵春-李清照]]
 == 计划 ==
 - [[tellmyself|我对自己说]]
-<!-- Last modified:  2011-05-22 23:36:40 -->
+<!-- Last modified:  2011-06-12 22:17:51 -->
