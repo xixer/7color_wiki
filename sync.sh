@@ -7,12 +7,10 @@ git pull xixer master
 
 echo "."
 echo "=========================================="
-echo -n "Pull from server completed, continue to push(y/n)?"
-read push_flag
+read -p "Pull from server completed, continue to push(y/n)?" push_flag
 
 if [ "$push_flag" = "y" ]; then
-    echo -n "Enter commit:"
-    read commit
+    read -p "Enter commit:" commit
     if [ -z $commit ]; then
         mydate=`date '+%x %T'`
         commit="Automatic commit at $commit"
@@ -20,16 +18,17 @@ if [ "$push_flag" = "y" ]; then
         commit=$commit
     fi
 
+    #git add -p /data/github.com/wiki/ .
     git add .
-    git commit -a -m $commit
+    git commit -a -m "$commit"
     git push xixer master
    
     echo "."
-    echo ".---------------------------------------------------------------------------."
+    echo ".-------------------------------------."
     echo "' '"
     echo "' Sync complete! '"
     echo "' '"
-    echo "----------------------------------------------------------------------------+"
+    echo "--------------------------------------+"
 else
     exit 0
 fi
