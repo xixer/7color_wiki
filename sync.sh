@@ -2,13 +2,11 @@
 echo "Sync(pull) starting"
 
 echo "."
-echo "=========================================="
+echo "========================================"
 git pull xixer master
+echo "========================================"
 
-echo "."
-echo "=========================================="
 read -p "Pull from server completed, continue to push(y/n)?" push_flag
-
 if [ "$push_flag" = "y" ]; then
     read -p "Enter commit:" commit
     if [ -z $commit ]; then
@@ -25,9 +23,9 @@ if [ "$push_flag" = "y" ]; then
    
     echo "."
     echo ".-------------------------------------."
-    echo "' '"
+    echo "'"
     echo "' Sync complete! '"
-    echo "' '"
+    echo "'"
     echo "--------------------------------------+"
 else
     exit 0
