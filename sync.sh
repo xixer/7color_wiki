@@ -7,7 +7,7 @@ git pull xixer master
 echo "========================================"
 
 read -p "Pull from server completed, continue to push(y/n)?" push_flag
-if [ "$push_flag" = "y" ]; then
+if [ "$push_flag" != "n" ]; then
     read -p "Enter commit:" commit
     if [ -z $commit ]; then
         mydate=`date '+%x %T'`
@@ -16,7 +16,6 @@ if [ "$push_flag" = "y" ]; then
         commit=$commit
     fi
 
-    #git add -p /data/github.com/wiki/ .
     git add .
     git commit -a -m "$commit"
     git push xixer master
