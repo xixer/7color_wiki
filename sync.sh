@@ -11,7 +11,7 @@ if [ "$push_flag" = "y" ]; then
     read -p "Enter commit:" commit
     if [ -z $commit ]; then
         mydate=`date '+%x %T'`
-        commit="Automatic commit at $commit"
+        commit="Automatic commit at $mydate"
     else
         commit=$commit
     fi
