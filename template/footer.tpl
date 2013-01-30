@@ -1,3 +1,4 @@
+    %paginator%
     </div>
 </div>
 <div id="footer">
